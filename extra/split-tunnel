@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+if [[ ! $SYSTEMD_EXEC_PID -eq $BASHPID ]]; then
+  echo "the executable is not started by systemd" 1>&2
+  exti 1
+fi
+
+mapfile -t cgroup_file </proc/self/cgroup
+cgroup="${cgroup_file[0]/0::/\/sys/fs/cgroup}"
+
+if ! busctl call org.hypperd.SplitTunnel \
+  /org/hypperd/SplitTunnel \
+  org.hypperd.SplitTunnel \
+  AddCgroupToSplitTunnel s "$cgroup"; then
+  exit 1
+fi
+
+exec "$@"

@@ -1,0 +1,15 @@
+[Unit]
+Description=Split Tunnel VPN daemon
+After=dbus.service
+BindsTo=dbus.service
+Before=NetworkManager.service
+Wants=NetworkManager.service
+
+[Service]
+ExecStart=/usr/bin/split-tunneld
+Type=dbus
+BusName=org.hypperd.SplitTunnel
+PrivateNetwork=yes
+
+[Install]
+WantedBy=multi-user.target

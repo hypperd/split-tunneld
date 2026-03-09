@@ -1,0 +1,17 @@
+[project]
+name = "split-tunneld"
+version = "0.1.0"
+description = "A dbus service to exclude a cgroup from the vpn connection"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+split-tunneld = "split-tunneld.main:main"
+
+[tool.setuptools.packages.find]
+exclude = ["extra"]

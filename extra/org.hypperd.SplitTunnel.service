@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.Avahi
+SystemdService=split-tunneld.service
+Exec=/usr/bin/split-tunneld
