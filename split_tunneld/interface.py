@@ -12,7 +12,7 @@ from dbus_fast.service import ServiceInterface, dbus_method
 
 FWMARK_MAP_KEY = ctypes.c_int32(1)
 BPF_PROGRAM = """
-BPF_TABLE_PINNED("hash", u32, u32, fwmark_map, 1, "/sys/fs/bpf/split-tunneld/fwmark_map")
+BPF_TABLE_PINNED("hash", u32, u32, fwmark_map, 1, "/sys/fs/bpf/split-tunneld/fwmark_map");
 
 int split_tunnel(struct bpf_sock *sk) {
     u32 fwmark_key = 1;
@@ -66,21 +66,6 @@ class SplitTunnelInterface(ServiceInterface):
         cgroup = os.open(path, os.O_RDONLY)
 
         self._bpf.attach_func(
-            self._bpf_split_tunneling_func,
-            cgroup,
-            bcc.BPFAttachType.CGROUP_INET_SOCK_CREATE,
-        )
-
-        os.close(cgroup)
-
-    @dbus_method()
-    def RemoveCgroupFromSplitTunnel(self, path: "s"):
-        if not os.path.exists(path):
-            raise DBusError(ErrorType.FILE_NOT_FOUND, "cgroup not found")
-
-        cgroup = os.open(path, os.O_RDONLY)
-
-        self._bpf.detach_func(
             self._bpf_split_tunneling_func,
             cgroup,
             bcc.BPFAttachType.CGROUP_INET_SOCK_CREATE,

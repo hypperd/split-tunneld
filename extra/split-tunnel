@@ -1,8 +1,13 @@
 #!/usr/bin/bash
 
+if [[ -z "$*" ]]; then
+  echo "a command is required"
+  exit 1
+fi
+
 if [[ ! $SYSTEMD_EXEC_PID -eq $BASHPID ]]; then
   echo "the executable is not started by systemd" 1>&2
-  exti 1
+  exit 1
 fi
 
 mapfile -t cgroup_file </proc/self/cgroup
