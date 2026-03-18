@@ -1,4 +1,4 @@
 [D-BUS Service]
-Name=org.freedesktop.Avahi
+Name=org.hypperd.SplitTunnel.service
 SystemdService=split-tunneld.service
 Exec=/usr/bin/split-tunneld
