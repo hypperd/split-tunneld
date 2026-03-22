@@ -1,4 +1,4 @@
 [D-BUS Service]
-Name=org.hypperd.SplitTunnel.service
+Name=org.hypperd.SplitTunnel
 SystemdService=split-tunneld.service
 Exec=/usr/bin/split-tunneld
